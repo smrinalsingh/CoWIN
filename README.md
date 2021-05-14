@@ -1,5 +1,5 @@
 # CoWIN
-A simple script to monitor vaccine's availbility using CoWIN's public APIs. I've tried to simplify the process so anyone can set it up and use in no time.
+A simple script to monitor vaccine's availability using CoWIN's public APIs. I've tried to simplify the process so anyone can set it up and use in no time.
 
 Requirements:
 1. Must have MS Outlook installed and running when using this script.
