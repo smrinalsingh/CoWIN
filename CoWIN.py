@@ -2,6 +2,9 @@ import requests as r
 import time
 import datetime
 import hashlib
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import win32com.client as win32
 
 
@@ -115,11 +118,33 @@ class RegisterVaccine:
         mail.Body = body
         mail.Send()
 
+    def SendSMTPEmail(self, body):
+        message = MIMEMultipart()
+        message['From'] = EmailID
+        message['To'] = self.SendEmailTo
+        message['Subject'] = "Slot Available | %s"%(self.PinCode)
+        message.attach(MIMEText(body, 'plain'))
+        session = smtplib.SMTP('smtp.gmail.com', 587)
+        session.starttls()
+        session.login(EmailID, Passwd) #login with mail_id and password
+        text = message.as_string()
+        session.sendmail(EmailID, self.SendEmailTo, text)
+        session.quit()
+
 if __name__ == "__main__":
     # Fill in these
     Age = 25
     PinCode = 560029
-    SendEmailTo = "youremail@domain.ext"
+    SendEmailTo = "destination@domain.ext"
+    OutlookExists = False
+
+    # If OutlookExists variable is set to False, enter the details below, i.e., 
+    # UserName and Passwd. This is the email ID from which mail would be sent.
+    # Go to https://support.google.com/accounts/answer/185833 for instructions on
+    # how to generate an 'App Password' which must be assigned to Passwd variable below 
+    # instead of your actual password.
+    EmailID = "from@gmail.com"
+    Passwd = "tzfgmtovoqpomjxz"
 
     # Don't change it. Looks like next 7 days' data anyways comes with API call.
     NoDays = 1
@@ -137,10 +162,14 @@ if __name__ == "__main__":
     while (True):
         SlotsAvailable = register.GetAvailableSlotsString()
         if SlotsAvailable:
-            register.SendOutlookEmail(SlotsAvailable)
+            if (OutlookExists):
+                register.SendOutlookEmail(SlotsAvailable)
+            else:
+                try:
+                    register.SendSMTPEmail(SlotsAvailable)
+                except Exception as e:
+                    print ("Error sending email via %s.\nError: %s"%(EmailID, e))
             time.sleep(DelaySuccessful)
+
         else:
             time.sleep(DelayUnsuccessful)
-        
-
-    
