@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
     # This is incase vaccine is available. Keep it high if you don't want to be 
     # spammed with mails when vaccines becomes available.
-    DelaySuccessful = 600
+    DelaySuccessful = 300
     
     # Don't bother.
     register = RegisterVaccine(Age, PinCode, NoDays, SendEmailTo)
