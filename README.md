@@ -2,7 +2,7 @@
 A simple script to monitor vaccine's availability using CoWIN's public APIs. I've tried to simplify the process so anyone can set it up and use in no time.
 
 Requirements:
-1. Must have MS Outlook installed and running when using this script.
+1. You must have MS Outlook installed and running when using this script (or) you must have an 'App Password' from gmail (only Gmail IDs are supported now). Instructions at https://support.google.com/accounts/answer/185833
 2. Must have Python installed.
 
 Process:
@@ -12,7 +12,7 @@ Process:
 2. Install it. Also, if you do not want to deal with complicated setup of **Environment Variables**, remember to check this option highlighted below on the very first page of Python setup:
 ![image](https://user-images.githubusercontent.com/3834741/118315257-ea4ebe80-b512-11eb-824d-be72e7845904.png)
 
-3. Open the **CoWIN.py** file with a text editor and go down to the bottom. You'll find three important variables that should be modified:
+3. Open the **CoWIN.py** file with a text editor and go down to the bottom. You'll find 4 - 6 important variables that should be modified. Read the instructions very carefully.
 ```
     Age = 25
     PinCode = 560029
@@ -22,8 +22,8 @@ Process:
     # If OutlookExists variable is set to False, enter the details below, i.e., 
     # UserName and Passwd. This is the email ID from which mail would be sent.
     # Go to https://support.google.com/accounts/answer/185833 for instructions on
-    # how to generate an 'App Password' which must be assigned to Passwd instead of 
-    # your actual password.
+    # how to generate an 'App Password' which must be assigned to Passwd variable below 
+    # instead of your actual password.
     EmailID = "from@gmail.com"
     Passwd = "tzfgmtovoqpomjxz"
 ```
