@@ -14,9 +14,18 @@ Process:
 
 3. Open the **CoWIN.py** file with a text editor and go down to the bottom. You'll find three important variables that should be modified:
 ```
-Age = 25
-PinCode = 560029
-SendEmailTo = "youremail@domain.ext"
+    Age = 25
+    PinCode = 560029
+    SendEmailTo = "destination@domain.ext"
+    OutlookExists = False
+
+    # If OutlookExists variable is set to False, enter the details below, i.e., 
+    # UserName and Passwd. This is the email ID from which mail would be sent.
+    # Go to https://support.google.com/accounts/answer/185833 for instructions on
+    # how to generate an 'App Password' which must be assigned to Passwd instead of 
+    # your actual password.
+    EmailID = "from@gmail.com"
+    Passwd = "tzfgmtovoqpomjxz"
 ```
 Modify these to suit your search criteria. Save it and exit.
 
