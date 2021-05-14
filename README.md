@@ -22,7 +22,7 @@ Process:
     # If OutlookExists variable is set to False, enter the details below, i.e., 
     # UserName and Passwd. This is the email ID from which mail would be sent.
     # Go to https://support.google.com/accounts/answer/185833 for instructions on
-    # how to generate an 'App Password' which must be assigned to Passwd variable below 
+    # how to generate an 'App Password' which must be assigned to **Passwd** variable below 
     # instead of your actual password.
     EmailID = "from@gmail.com"
     Passwd = "tzfgmtovoqpomjxz"
