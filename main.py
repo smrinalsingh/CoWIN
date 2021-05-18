@@ -30,11 +30,11 @@ def ExecuteCowin():
 
         # This defines the delay between each check. Try to keep it above 2 mins, 
         # i.e. 120 second, otherwise your IP may get blocked temporarily.
-        DelayUnsuccessful = 10
+        DelayUnsuccessful = int(co.VarDelayNoSuccess.get())
 
         # This is incase vaccine is available. Keep it high if you don't want to be 
         # spammed with mails when vaccines becomes available.
-        DelaySuccessful = 10
+        DelaySuccessful = int(co.VarDelaySuccess.get())
         
         # Don't bother.
         co.btnRun.config(state="disabled")
@@ -42,7 +42,8 @@ def ExecuteCowin():
         co.VarLog.set("Execution Started")
         try:
             register = CoWIN.CoWIN(Age, PinCode, NoDays, SendEmailTo)
-            while (not STOP_FLAG):
+            IsExecutable = True
+            while (not STOP_FLAG and IsExecutable):
                 SlotsAvailable = register.GetAvailableSlotsString()
                 if SlotsAvailable:
                     if (OutlookExists):
@@ -51,9 +52,12 @@ def ExecuteCowin():
                         try:
                             register.SendSMTPEmail(SlotsAvailable, EmailID, Passwd)
                         except Exception as e:
-                            print ("Error sending email via %s.\nError: %s"%(EmailID, e))
+                            try:
+                                co.VarLog.set("Error: %s"%e)
+                                IsExecutable = False
+                            except:
+                                pass
                     time.sleep(DelaySuccessful)
-
                 else:
                     time.sleep(DelayUnsuccessful)
         except Exception as e:
@@ -78,7 +82,7 @@ def on_closing():
     co.window.destroy()
 
 if __name__ == "__main__":
-    co = CoWINUI.CoWINWindow()
+    co = CoWINUI.CoWINUI()
     co.window.protocol("WM_DELETE_WINDOW", on_closing)
     co.btnRun.config(command=ExecuteCowin)
     co.btnStop.config(command=StopExecution)
