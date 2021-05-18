@@ -7,8 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import win32com.client as win32
 
-
-class RegisterVaccine:
+class CoWIN:
     def __init__(self, Age, PinCode, NoDays, SendEmailTo):
         #self.Mobile = Mobile
         self.Age = Age
@@ -118,25 +117,25 @@ class RegisterVaccine:
         mail.Body = body
         mail.Send()
 
-    def SendSMTPEmail(self, body):
+    def SendSMTPEmail(self, body, emailID, passwd):
         message = MIMEMultipart()
-        message['From'] = EmailID
+        message['From'] = emailID
         message['To'] = self.SendEmailTo
         message['Subject'] = "Slot Available | %s"%(self.PinCode)
         message.attach(MIMEText(body, 'plain'))
         session = smtplib.SMTP('smtp.gmail.com', 587)
         session.starttls()
-        session.login(EmailID, Passwd) #login with mail_id and password
+        session.login(emailID, passwd) #login with mail_id and password
         text = message.as_string()
-        session.sendmail(EmailID, self.SendEmailTo, text)
+        session.sendmail(emailID, self.SendEmailTo, text)
         session.quit()
 
 if __name__ == "__main__":
     # Fill in these
     Age = 25
-    PinCode = 560029
-    SendEmailTo = "destination@domain.ext"
-    OutlookExists = False
+    PinCode = 800008
+    SendEmailTo = "s.mrinalsingh@gmail.com"
+    OutlookExists = True
 
     # If OutlookExists variable is set to False, enter the details below, i.e., 
     # UserName and Passwd. This is the email ID from which mail would be sent.
@@ -158,7 +157,7 @@ if __name__ == "__main__":
     DelaySuccessful = 300
     
     # Don't bother.
-    register = RegisterVaccine(Age, PinCode, NoDays, SendEmailTo)
+    register = CoWIN(Age, PinCode, NoDays, SendEmailTo)
     while (True):
         SlotsAvailable = register.GetAvailableSlotsString()
         if SlotsAvailable:
@@ -166,7 +165,7 @@ if __name__ == "__main__":
                 register.SendOutlookEmail(SlotsAvailable)
             else:
                 try:
-                    register.SendSMTPEmail(SlotsAvailable)
+                    register.SendSMTPEmail(SlotsAvailable, EmailID, Passwd)
                 except Exception as e:
                     print ("Error sending email via %s.\nError: %s"%(EmailID, e))
             time.sleep(DelaySuccessful)
