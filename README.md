@@ -1,4 +1,5 @@
-# CoWIN
+# DEPRECATED
+## CoWIN
 A simple script to monitor vaccine's availability using CoWIN's public APIs. I've tried to simplify the process so anyone can set it up and use in no time.
 
 Requirements:
